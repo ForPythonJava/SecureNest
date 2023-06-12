@@ -5,3 +5,5 @@ from .models import *
 
 admin.site.register(Login)
 admin.site.register(School)
+admin.site.register(Child)
+admin.site.register(Message)

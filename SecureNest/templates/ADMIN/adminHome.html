@@ -244,8 +244,21 @@ RIGHT SIDEBAR TOGGLE SECTION
                                         aria-hidden="true"></span></label>
                                 <input type="checkbox" id="drop">
                                 <ul class="menu">
-                                    <li><a href="/">Home</a></li>
-                                    <li><a href="/login">Sign In</a></li>
+                                    <li><a href="/adminHome">Home</a></li>
+
+                                    <li>
+                                        <!-- First Tier Drop Down -->
+                                        <label for="drop-8" class="toggle toogle-8">VIEW<span class="angle-dropdown"
+                                                aria-hidden="true"></span>
+                                        </label>
+                                        <a href="#shop">VIEW<span class="angle-dropdown" aria-hidden="true"></span></a>
+                                        <input type="checkbox" id="drop-8">
+
+                                        <ul>
+                                            <li><a href="/viewChild" class="drop-text">CHILD</a></li>
+                                            <li><a href="/viewSchool" class="drop-text">SCHOOL</a></li>
+                                        </ul>
+                                    </li>
                                     <li>
                                         <!-- First Tier Drop Down -->
                                         <label for="drop-8" class="toggle toogle-8">SIGN UP <span class="angle-dropdown"
@@ -261,6 +274,8 @@ RIGHT SIDEBAR TOGGLE SECTION
 
                                         </ul>
                                     </li>
+                                    <li><a href="/logout">Logout</a></li>
+
                                 </ul>
                             </nav>
 
@@ -774,16 +789,7 @@ RIGHT SIDEBAR TOGGLE SECTION
                                         </div>
                                     </div>
                                 </div>
-                                <div class="sub-one-left">
-                                    <h6>Subscribe to our Newsletter </h6>
-                                    <form action="#" method="post" class="footer-newsletter">
-                                        <div class="">
-                                            <input type="email" name="email" class="form-input"
-                                                placeholder="Enter your email.." />
-                                        </div>
-                                        <button type="submit" class="btn">Subscribe</button>
-                                    </form>
-                                </div>
+                                
                             </div>
                         </div>
                     </div>

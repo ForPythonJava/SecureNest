@@ -30,4 +30,8 @@ urlpatterns = [
     path("childHome/", views.childHome),
     path("schoolHome/", views.schoolHome),
     path("viewChild/", views.viewChild),
+    path("adminBase/", views.adminBase),
+    path("logout/", views.logout),
+    path("deleteChild/", views.deleteChild),
+    path("chat/", views.chat),
 ]

@@ -13,6 +13,11 @@ def index(request):
     return render(request, "index.html")
 
 
+def logout(request):
+    request.session.clear()
+    return HttpResponseRedirect("/login")
+
+
 def contact(request):
     return render(request, "contact.html")
 
@@ -34,7 +39,7 @@ def signin(request):
                 id = user.id
                 request.session["uid"] = id
                 messages.info(request, "Login Success")
-                return redirect("/userHome")
+                return redirect("/childHome")
             elif user.userType == "School":
                 id = user.id
                 request.session["uid"] = id
@@ -142,3 +147,38 @@ def policeHome(request):
 def viewChild(request):
     childData = Child.objects.all()
     return render(request, "ADMIN/viewChild.html", {"childData": childData})
+
+
+def adminBase(request):
+    return render(request, "ADMIN/adminBase.html")
+
+
+def deleteChild(request):
+    id = request.GET["id"]
+    deleteStud = Child.objects.filter(id=id).delete()
+    return HttpResponseRedirect("/viewChild")
+
+
+def chat(request):
+    uid = request.session["uid"]
+    print(uid)
+    sid = Child.objects.get(loginid=uid)
+    time = datetime.now().time()
+    date = datetime.now().date()
+    formatted_time = time.strftime("%I:%M %p")
+    formatted_date = date.strftime("%B %d")
+
+    chats = Message.objects.filter(sender_id__loginid_id=uid)
+    print(chats)
+
+    if request.POST:
+        message = request.POST["message"]
+        sendMsg = Message.objects.create(
+            message=message,
+            date=formatted_date,
+            time=formatted_time,
+            type="Child",
+            sender=sid,
+        )
+        sendMsg.save()
+    return render(request, "ADMIN/chat.html", {"chats": chats})
