@@ -1,0 +1,86 @@
+{% extends "ADMIN/adminBase.html" %}
+{% block header %}
+
+{% if messages %}
+{% for message in messages %}
+<script>
+  alert("{{ message }}")
+</script>
+{% endfor %}
+{% endif %}
+
+<style>
+    #gender {
+        background: #fff;
+        outline: none;
+        width: 100%;
+        font-size: 17px;
+        padding: 10px 15px;
+        color: var(--title-color);
+        border: 2px solid #ecf1f1;
+    }
+</style>
+<section class="w3l-contact-main">
+    <div class="contact-info-6">
+        <div class="wrapper">
+            <div class="contact-hny-inner">
+                <div class="comment-top d-grid">
+                    <div class="comment-bottom lavi_mail_grid_right">
+                        <h3 class="hny-title text-left">Add Police Station</h3>
+                        <p class="para-contact"></p>
+                        <form method="post">
+                            {% csrf_token %}
+                            <div class="form-group">
+                                <label for="w3lName">Station Name</label>
+
+                                <input type="text" name="stname" id="w3lName" placeholder="Enter Station Name">
+                            </div>
+                            <div class="form-group">
+                                <label for="w3lSender">E-Mail</label>
+                                <input type="text" name="email"
+                                    pattern="[a-zA-Z0-9.-_]{1,}@[a-zA-Z.-]{2,}[.]{1}[a-zA-Z]{2,}" placeholder="Email"
+                                    required />
+                            </div>
+                            <div class="form-group">
+                                <label for="w3lSender">Phone</label>
+                                <input type="text" name="phone" pattern="[6789][0-9]{9}" maxlength="10" minlength="10"
+                                    placeholder="Phone" required />
+                            </div>
+                            <div class="form-group">
+                                <label for="w3lSender">Select District</label>
+                                <select id="gender" class="form-control" name="district">
+                                    <option id="w3lName" selected disabled>--Select a District--</option>
+                                    <option value="Alappuzha">Alappuzha</option>
+                                    <option value="Ernakulam">Ernakulam</option>
+                                    <option value="Idukki">Idukki</option>
+                                    <option value="Kannur">Kannur</option>
+                                    <option value="Kasaragod">Kasaragod</option>
+                                    <option value="Kollam">Kollam</option>
+                                    <option value="Kottayam">Kottayam</option>
+                                    <option value="Kozhikode">Kozhikode</option>
+                                    <option value="Malappuram">Malappuram</option>
+                                    <option value="Palakkad">Palakkad</option>
+                                    <option value="Pathanamthitta">Pathanamthitta</option>
+                                    <option value="Thiruvananthapuram">Thiruvananthapuram</option>
+                                    <option value="Thrissur">Thrissur</option>
+                                    <option value="Wayanad">Wayanad</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="w3lSubject">Password</label>
+                                <input type="password" name="password" placeholder="Password" required />
+                            </div>
+                            <div class="form-group">
+                                <label for="w3lSubject">Address</label>
+                                <textarea name="address" id="w3lMessage" placeholder="Address"></textarea>
+                            </div>
+                           
+                            <button type="submit" class="btn submit mt-3">ADD</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}

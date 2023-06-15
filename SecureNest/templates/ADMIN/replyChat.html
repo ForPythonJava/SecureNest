@@ -1,4 +1,4 @@
-{% extends 'CHILD/childBase.html' %}
+{% extends "ADMIN/adminBase.html" %}
 {% block header %}
 {% load static %}
 <style>
@@ -85,7 +85,7 @@
 
                                     <div class="msg_history">
                                         {% for message in chats %}
-                                        {% if message.type == "Admin" %}
+                                        {% if message.type == "Child" %}
                                         <div class="incoming_msg">
                                             <div class="incoming_msg_img">
                                                 <img src="/static/chat/media/du1.jpg" alt="" class="img-fluid">
@@ -104,7 +104,7 @@
                                                 <span class="time_date"> {{ message.date}}|{{message.time}}</span>
                                             </div>
                                         </div>
-{% endif %}
+                                        {% endif %}
                                         {% endfor %}
                                     </div>
                                     {% endif %}
@@ -215,4 +215,4 @@
     <!-- Bootstrap Core JavaScript -->
     <script src="{% static 'chat/js/bootstrap.min.js' %}"></script>
 
-{% endblock %}
+    {% endblock %}

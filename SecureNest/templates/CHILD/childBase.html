@@ -10,7 +10,6 @@
     <title>SECURENEST</title>
     <link rel="stylesheet" href="{% static 'assets/css/style-freedom.css' %}">
     <link rel="stylesheet" href="{% static 'assets/css/font-awesome.min.css' %}">
-    <!-- <link rel="icon" type="image/png" href="{% static 'assets/images/admin.png' %}"> -->
 </head>
 
 <body>
@@ -245,20 +244,21 @@ RIGHT SIDEBAR TOGGLE SECTION
                                         aria-hidden="true"></span></label>
                                 <input type="checkbox" id="drop">
                                 <ul class="menu">
-                                    <li><a href="/adminHome">Home</a></li>
-                                    <li><a href="/viewStudents">Chat</a></li>
+                                    <li><a href="/childHome">Home</a></li>
+                                    <li><a href="/chat?id=3">Chat</a></li>
                                     <li>
                                         <!-- First Tier Drop Down -->
-                                        <label for="drop-8" class="toggle toogle-8">ADD<span class="angle-dropdown"
+                                        <label for="drop-8" class="toggle toogle-8">VIEW <span class="angle-dropdown"
                                                 aria-hidden="true"></span>
                                         </label>
-                                        <a href="#shop">ADD<span class="angle-dropdown" aria-hidden="true"></span></a>
+                                        <a href="#shop">VIEW <span class="angle-dropdown"
+                                                aria-hidden="true"></span></a>
                                         <input type="checkbox" id="drop-8">
 
                                         <ul>
-                                            <li><a href="/addLaws" class="drop-text">LAWS</a></li>
-                                            <li><a href="/addRights" class="drop-text">RIGHTS</a></li>
-                                            <li><a href="/addPoliceStation" class="drop-text">POLICE STATION</a></li>
+                                            <li><a href="/childViewRights" class="drop-text">RIGHTS</a></li>
+                                            <li><a href="/childViewLaws" class="drop-text">LAW</a></li>
+
                                         </ul>
                                     </li>
                                     <li>
@@ -273,9 +273,7 @@ RIGHT SIDEBAR TOGGLE SECTION
                                             <li><a href="/viewChild" class="drop-text">CHILD</a></li>
                                             <li><a href="/viewSchool" class="drop-text">SCHOOL</a></li>
                                             <li><a href="/viewLaws" class="drop-text">LAW</a></li>
-                                            <li><a href="/viewRights" class="drop-text">RIGHTS</a></li>
-                                            <li><a href="/viewPolice" class="drop-text">POLICE</a></li>
-
+                                            <li><a href="/viewRights" class="drop-text">RIGHT</a></li>
                                         </ul>
                                     </li>
                                     
@@ -283,7 +281,6 @@ RIGHT SIDEBAR TOGGLE SECTION
 
                                 </ul>
                             </nav>
-
 
                         </div>
                         <div class="d-grid nav-mobile-block header-align">
@@ -294,7 +291,7 @@ RIGHT SIDEBAR TOGGLE SECTION
                     <div class="wrapper">
                         <div class="inner-page-hny-info">
                             <ul class="breadcrumbs-custom-path text-center">
-                                <li><a href="#"><span class="" aria-hidden="true"></span></a>
+                                <li><a href="index.html"><span class="" aria-hidden="true"></span></a>
                                 </li>
                             </ul>
                         </div>
@@ -365,7 +362,7 @@ RIGHT SIDEBAR TOGGLE SECTION
                     <div class="wrapper-full">
                         <div class="copyright-footer">
                             <div class="columns">
-                                <ul class="social" style="display: none;">
+                                <ul class="social"  style="display: none;" >
                                     <li><a href="#"><span class="fa fa-facebook" aria-hidden="true"></span></a></li>
                                     <li><a href="#"><span class="fa fa-linkedin" aria-hidden="true"></span></a></li>
                                     <li><a href="#"><span class="fa fa-twitter" aria-hidden="true"></span></a></li>

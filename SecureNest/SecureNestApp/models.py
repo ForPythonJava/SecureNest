@@ -40,8 +40,45 @@ class Child(models.Model):
 
 
 class Message(models.Model):
-    sender = models.ForeignKey(Child, on_delete=models.CASCADE)
+    sender = models.ForeignKey(
+        Child, on_delete=models.CASCADE, related_name="sent_messages"
+    )
+    receiver = models.ForeignKey(
+        Child, on_delete=models.CASCADE, related_name="received_messages", null=True
+    )
     message = models.CharField(max_length=300)
     date = models.CharField(max_length=100, null=True)
     time = models.CharField(max_length=100, null=True)
     type = models.CharField(max_length=100)
+
+    def __str__(self):
+        return self.message
+
+
+class Laws(models.Model):
+    actname = models.CharField(max_length=100)
+    year = models.CharField(max_length=100)
+    desc = models.CharField(max_length=300)
+
+    def __str__(self):
+        return self.actname
+
+
+class Rights(models.Model):
+    rightname = models.CharField(max_length=100)
+    desc = models.CharField(max_length=300)
+
+    def __str__(self):
+        return self.rightname
+
+
+class PoliceStation(models.Model):
+    name = models.CharField(max_length=100)
+    email = models.EmailField(max_length=100)
+    phone = models.IntegerField()
+    district = models.CharField(max_length=100)
+    address = models.CharField(max_length=300)
+    loginid = models.ForeignKey(Login, on_delete=models.CASCADE)
+
+    def __str__(self):
+        return self.name

@@ -1,0 +1,33 @@
+{% extends "ADMIN/adminBase.html" %}
+{% load static %}
+{% block header %}
+
+
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet">
+
+<section class="w3l-team-main-6">
+    <!-- /team-grids -->
+    <div class="team-content">
+        <div class="wrapper">
+            <h3 class="hny-title text-center">Students</h3>
+            <div class="d-grid grid-col-4 text-center">
+                {% for i in common_children %}
+                <div class="team-main-6 border rounded bg-light" style="padding: 15px;">
+                    <div class="column-8">
+                        <a href="team-single.html"><img class="img-responsive"
+                                src="{% static 'assets/images/study.png' %}" alt=" "></a>
+                    </div>
+                    <div class="right-team-9">
+                        <h4>{{i.name}}</h4>
+                        <h6>E-Mail: {{i.email}}</h6>
+                        <h6>Phone: {{i.phone}}</h6>
+                        <a href="/replyChat?id={{i.id}}" class="btn btn-outline-success">CHAT</a>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+    <!-- /team-grids -->
+</section>
+{% endblock %}
