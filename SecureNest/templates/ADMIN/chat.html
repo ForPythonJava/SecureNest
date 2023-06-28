@@ -6,41 +6,6 @@
         margin: 0;
     }
 
-    ul {
-        list-style-type: none;
-        margin: 0;
-        padding: 0;
-        overflow: hidden;
-        position: fixed;
-        top: 0;
-        width: 100%;
-        Height: 100px;
-
-    }
-
-    li {
-        float: left;
-    }
-
-    li a {
-        display: block;
-        color: white;
-        text-align: center;
-        padding: 14px 16px;
-        text-decoration: none;
-        font-weight: 800;
-        font-size: large;
-    }
-
-    /* li a:hover:not(.active) {
-    background-color: #ffcc00;
-  } */
-
-    /* .active {
-
-    background-color: #4CAF50;
-    color: white;
-  } */
 </style>
 </head>
 
@@ -69,17 +34,7 @@
                         </div>
                         <div class="messaging">
                             <div class="inbox_msg">
-                                <div class="inbox_people">
-                                    <!-- <div class="headind_srch">
-                     <div class="srch_bar">
-                        <div class="stylish-input-group">
-                        <input type="text" class="search-bar" placeholder="Search Chat">
-                        <span class="input-group-addon">
-                            <button type="button"> <i class="fa fa-search" aria-hidden="true"></i> </button>
-                        </span> </div>
-                    </div> 
-                    </div> -->
-                                </div>
+
                                 <div class="mesgs">
                                     {% if chats %}
 
@@ -104,7 +59,7 @@
                                                 <span class="time_date"> {{ message.date}}|{{message.time}}</span>
                                             </div>
                                         </div>
-{% endif %}
+                                        {% endif %}
                                         {% endfor %}
                                     </div>
                                     {% endif %}
@@ -215,4 +170,4 @@
     <!-- Bootstrap Core JavaScript -->
     <script src="{% static 'chat/js/bootstrap.min.js' %}"></script>
 
-{% endblock %}
+    {% endblock %}

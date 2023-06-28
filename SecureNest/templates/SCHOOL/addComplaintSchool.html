@@ -1,0 +1,38 @@
+{% extends "SCHOOL/schoolBase.html" %}
+{% block header %}
+
+{% if messages %}
+{% for message in messages %}
+<script>
+    alert("{{ message }}")
+</script>
+{% endfor %}
+{% endif %}
+
+<section class="w3l-contact-main">
+    <div class="contact-info-6">
+        <div class="wrapper">
+            <div class="contact-hny-inner">
+                <div class="comment-top d-grid">
+                    <div class="comment-bottom lavi_mail_grid_right">
+                        <h3 class="hny-title text-left">Raise Complaint</h3>
+                        <p class="para-contact"></p>
+                        <form method="post">
+                            {% csrf_token %}
+                            <div class="form-group">
+                                <label for="w3lName">Title</label>
+                                <input type="text" name="title" id="w3lName" placeholder="Title">
+                            </div>
+                            <div class="form-group">
+                                <label for="w3lSubject">Description</label>
+                                <textarea name="desc" id="w3lMessage" rows="10" placeholder="Describe Here"></textarea>
+                            </div>
+                            <button type="submit" class="btn submit mt-3">SUBMIT</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}

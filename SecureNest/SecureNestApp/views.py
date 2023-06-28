@@ -54,7 +54,12 @@ def signin(request):
                 id = user.id
                 request.session["uid"] = id
                 messages.info(request, "Login Success")
-                return redirect("/userHome")
+                return redirect("/schoolHome")
+            elif user.userType == "Police":
+                id = user.id
+                request.session["uid"] = id
+                messages.info(request, "Login Success")
+                return redirect("/policeHome")
         else:
             print("Hiii")
             messages.error(request, "Invalid Username/Password")
@@ -215,21 +220,6 @@ def chat(request):
     return render(request, "ADMIN/chat.html", {"chats": chats})
 
 
-# def viewStudents(request):
-#     lis=[]
-#     getData=''
-#     childData = Message.objects.values('sender').distinct()
-
-#     for data in childData:
-#         print(data['sender'])
-#         lis.append(data['sender'])
-#     print(lis)
-#     for i in lis:
-#         getData=Child.objects.filter(id=i)
-#     print(getData)
-#     return render(request,"ADMIN/viewStudents.html",{"childData":childData,"getData":getData})
-
-
 def viewStudents(request):
     common_ids = set(Child.objects.values_list("id", flat=True)).intersection(
         Message.objects.values_list("sender", flat=True)
@@ -365,7 +355,89 @@ def deletePolice(request):
     return HttpResponsePermanentRedirect("/viewPolice")
 
 
-#################################CHILDREN##############################################
+def viewComplaints(request):
+    complaints = Complaints.objects.filter(utype="CHILD")
+    print(complaints)
+    stations = PoliceStation.objects.all()
+    return render(
+        request,
+        "ADMIN/viewComplaints.html",
+        {"complaints": complaints, "stations": stations},
+    )
+
+
+def viewSchoolComplaints(request):
+    complaints = SchoolComplaints.objects.all()
+    print(complaints)
+    stations = PoliceStation.objects.all()
+    return render(
+        request,
+        "ADMIN/viewSchoolComplaints.html",
+        {"complaints": complaints, "stations": stations},
+    )
+
+
+def replySchoolComplaint(request):
+    if request.POST:
+        reply = request.POST["reply"]
+        id = request.POST["id"]
+        replyComp = SchoolComplaints.objects.filter(id=id).update(reply=reply)
+    return redirect("/viewSchoolComplaints")
+
+
+def forwardSchoolComplaint(request):
+    if request.POST:
+        station = request.POST["station"]
+        sid = PoliceStation.objects.get(id=station)
+        id = request.POST["id"]
+        forwardData = SchoolComplaints.objects.filter(id=id).update(
+            station=sid, status="FORWARDED"
+        )
+    return redirect("/viewSchoolComplaints")
+
+
+def replyComplaint(request):
+    if request.POST:
+        reply = request.POST["reply"]
+        id = request.POST["id"]
+        replyComp = Complaints.objects.filter(id=id).update(reply=reply)
+    return redirect("/viewComplaints")
+
+
+def forwardComplaint(request):
+    if request.POST:
+        station = request.POST["station"]
+        sid = PoliceStation.objects.get(id=station)
+        id = request.POST["id"]
+        forwardData = Complaints.objects.filter(id=id).update(
+            station=sid, status="FORWARDED"
+        )
+    return redirect("/viewComplaints")
+
+
+def addPrograms(request):
+    current_date = datetime.today().strftime("%Y-%m-%d")
+
+    if request.POST:
+        name = request.POST["pgmname"]
+        date = request.POST["date"]
+        venue = request.POST["venue"]
+        desc = request.POST["desc"]
+        addPgrm = Programs.objects.create(name=name, date=date, venue=venue, desc=desc)
+        addPgrm.save()
+        messages.success(request, "Program Added")
+    return render(request, "ADMIN/addPrograms.html", {"current_date": current_date})
+
+
+def viewPrograms(request):
+    pgrmData = Programs.objects.all()
+    print(pgrmData)
+    return render(request, "ADMIN/viewPrograms.html", {"pgrmData": pgrmData})
+
+
+###############################################################--CHILDREN--##################################################
+
+
 def childViewLaws(request):
     laws = Laws.objects.all()
     return render(request, "CHILD/viewLaws.html", {"laws": laws})
@@ -374,3 +446,92 @@ def childViewLaws(request):
 def childViewRights(request):
     rights = Rights.objects.all()
     return render(request, "CHILD/viewRights.html", {"rights": rights})
+
+
+def addComplaint(request):
+    id = request.session["uid"]
+    cid = Child.objects.get(loginid=id)
+    if request.POST:
+        title = request.POST["title"]
+        desc = request.POST["desc"]
+        addComp = Complaints.objects.create(title=title, desc=desc, childid=cid)
+        addComp.save()
+    return render(request, "CHILD/addComplaint.html")
+
+
+def myComplaints(request):
+    id = request.session["uid"]
+    print(id)
+    myCompaint = Complaints.objects.filter(Q(childid_id__loginid=id) & Q(utype="CHILD"))
+    print(myCompaint)
+    return render(request, "CHILD/myComplaints.html", {"myCompaint": myCompaint})
+
+
+def viewProgramsChild(request):
+    pgrmData = Programs.objects.all()
+    print(pgrmData)
+    return render(request, "CHILD/viewProgramsChild.html", {"pgrmData": pgrmData})
+
+
+######################################################POLICE############################################################
+def viewComplaintsPolice(request):
+    id = request.session["uid"]
+    complaints = Complaints.objects.filter(Q(station_id__loginid=id) & Q(utype="CHILD"))
+    print(complaints)
+    return render(request, "POLICE/viewComplaints.html", {"complaints": complaints})
+
+
+def replyComplaintPolice(request):
+    if request.POST:
+        reply = request.POST["reply"]
+        id = request.POST["id"]
+        replyComp = Complaints.objects.filter(id=id).update(
+            policeReply=reply, status="REPLIED"
+        )
+    return redirect("/viewComplaintsPolice")
+
+
+def viewSchoolComplaintsPolice(request):
+    id = request.session["uid"]
+    print("hiii", id)
+    complaints = SchoolComplaints.objects.filter(Q(station_id__loginid=id))
+    print(complaints)
+    return render(
+        request, "POLICE/viewSchoolComplaintsPolice.html", {"complaints": complaints}
+    )
+
+
+def replySchoolComplaintPolice(request):
+    if request.POST:
+        reply = request.POST["reply"]
+        id = request.POST["id"]
+        replyComp = SchoolComplaints.objects.filter(id=id).update(
+            policeReply=reply, status="REPLIED"
+        )
+    return redirect("/viewSchoolComplaintsPolice")
+
+
+######################################################--SCHOOL--############################################################
+def viewProgramSchool(request):
+    pgrmData = Programs.objects.all()
+    print(pgrmData)
+    return render(request, "SCHOOL/viewProgramsSchool.html", {"pgrmData": pgrmData})
+
+
+def addComplaintSchool(request):
+    id = request.session["uid"]
+    sid = School.objects.get(loginid=id)
+    if request.POST:
+        title = request.POST["title"]
+        desc = request.POST["desc"]
+        addComp = SchoolComplaints.objects.create(title=title, desc=desc, schoolid=sid)
+        addComp.save()
+    return render(request, "SCHOOL/addComplaintSchool.html")
+
+
+def schoolComplaints(request):
+    id = request.session["uid"]
+    print(id)
+    myCompaint = SchoolComplaints.objects.filter(Q(schoolid_id__loginid=id))
+    print(myCompaint)
+    return render(request, "SCHOOL/schoolComplaints.html", {"myCompaint": myCompaint})

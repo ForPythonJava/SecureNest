@@ -16,7 +16,7 @@ class Login(AbstractUser):
 class School(models.Model):
     name = models.CharField(max_length=100)
     email = models.EmailField(max_length=100)
-    phone = models.IntegerField(max_length=100)
+    phone = models.IntegerField()
     address = models.CharField(max_length=300)
     state = models.CharField(max_length=100)
     loginid = models.ForeignKey(Login, on_delete=models.CASCADE)
@@ -28,7 +28,7 @@ class School(models.Model):
 class Child(models.Model):
     name = models.CharField(max_length=100)
     email = models.EmailField(max_length=100)
-    phone = models.IntegerField(max_length=100)
+    phone = models.IntegerField()
     dob = models.DateField()
     gender = models.CharField(max_length=100)
     school = models.ForeignKey(School, on_delete=models.CASCADE, null=True)
@@ -82,3 +82,33 @@ class PoliceStation(models.Model):
 
     def __str__(self):
         return self.name
+
+
+class Complaints(models.Model):
+    title = models.CharField(max_length=100)
+    desc = models.CharField(max_length=500)
+    childid = models.ForeignKey(Child, on_delete=models.CASCADE)
+    date = models.DateField(auto_now=True)
+    station = models.ForeignKey(PoliceStation, on_delete=models.CASCADE, null=True)
+    reply = models.CharField(max_length=500, default="NO REPLY")
+    policeReply = models.CharField(max_length=500, default="NO REPLY")
+    status = models.CharField(max_length=100, default="RAISED")
+    utype = models.CharField(max_length=100, default="CHILD")
+
+
+class Programs(models.Model):
+    name = models.CharField(max_length=100)
+    date = models.DateField()
+    venue = models.CharField(max_length=100)
+    desc = models.CharField(max_length=500)
+
+
+class SchoolComplaints(models.Model):
+    title = models.CharField(max_length=100)
+    desc = models.CharField(max_length=500)
+    schoolid = models.ForeignKey(School, on_delete=models.CASCADE)
+    date = models.DateField(auto_now=True)
+    station = models.ForeignKey(PoliceStation, on_delete=models.CASCADE, null=True)
+    reply = models.CharField(max_length=500, default="NO REPLY")
+    policeReply = models.CharField(max_length=500, default="NO REPLY")
+    status = models.CharField(max_length=100, default="RAISED")
